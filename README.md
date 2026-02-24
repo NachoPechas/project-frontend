@@ -15,16 +15,12 @@ Actualmente nos encontramos en etapa de planificación, definiendo:
 ## 🚀 Estructura del Proyecto
 
 La estructura base del fronted se organizará de la siguiente forma:
+
 ├── .gitignore
 ├── README.md
 ├── src
-│   └── ... (código fuente del backend: dominios, servicios, controladores, etc.)
-├── tests
-│   └── ... (pruebas unitarias / de integración)
-├── scripts
-│   └── ... (scripts de inicialización BD, seeds, etc. si no están en el repo de docs)
-└── docs
-    └── ... (documentación técnica específica del backend, opcional)
+│ └── ... (pantallas, componentes, vistas, etc.)
+└── public / assets / ... (según tecnología)
 
 
 ---
