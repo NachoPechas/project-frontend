@@ -15,13 +15,13 @@ Actualmente nos encontramos en etapa de planificación, definiendo:
 ## 🚀 Estructura del Proyecto
 
 La estructura base del fronted se organizará de la siguiente forma:
-
+```bash
 ├── .gitignore
 ├── README.md
 ├── src
 │ └── ... (pantallas, componentes, vistas, etc.)
 └── public / assets / ... (según tecnología)
-
+```
 
 ---
 
