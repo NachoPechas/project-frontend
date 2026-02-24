@@ -1,73 +1,81 @@
-# 🎨 Frontend - NachoPechas
-
-> ⚠️ **Estado del proyecto:** En fase de planeación - Por definir.
-
-Este repositorio contiene la implementación del **frontend** del proyecto desarrollado por el equipo.
-
-Actualmente nos encontramos en etapa de planificación, definiendo:
-- Requerimientos funcionales
-- Stack tecnológico
-- Arquitectura del sistema
-- Lineamientos de diseño
 
 ---
 
-## 🚀 Estructura del Proyecto
+# 🎨 Frontend - NachoPechas
 
-La estructura base del fronted se organizará de la siguiente forma:
+> ⚠️ **Project Status:** In planning phase - To be defined.
+
+This repository contains the implementation of the project’s **frontend** developed by the team.
+
+We are currently in the planning stage, defining:
+
+* Functional requirements
+* Technology stack
+* System architecture
+* Design guidelines
+
+---
+
+## 🚀 Project Structure
+
+The base frontend structure will be organized as follows:
+
 ```bash
 ├── .gitignore
 ├── README.md
 ├── src
-│ └── ... (pantallas, componentes, vistas, etc.)
-└── public / assets / ... (según tecnología)
+│ └── ... (screens, components, views, etc.)
+└── public / assets / ... (depending on the technology)
 ```
 
 ---
 
-## 🛠️ Tecnologías (Por definir)
+## 🛠️ Technologies (To be defined)
 
-Las tecnologías a utilizar serán definidas en la fase de diseño del sistema.
+The technologies to be used will be defined during the system design phase.
 
-Posibles herramientas a evaluar:
+Possible tools to be evaluated:
 
-- Framework de desarrollo
-- Librerías de estilos
-- Manejo de estado
-- Consumo de API
-- Testing
+* Development framework
+* Styling libraries
+* State management
+* API consumption
+* Testing
 
 ---
 
-## ⚙️ Instalación
+## ⚙️ Installation
 
-_Instrucciones disponibles próximamente._
+*Instructions coming soon.*
 
 ---
 
 ## 🧪 Testing
 
-_Estrategia de pruebas por definir._
+*Testing strategy to be defined.*
 
 ---
 
-## 📄 Convenciones de Código
+## 📄 Code Conventions
 
-Las convenciones de desarrollo serán establecidas por el equipo para asegurar:
+Development conventions will be established by the team to ensure:
 
-- Legibilidad
-- Escalabilidad
-- Mantenibilidad
-- Buenas prácticas
-
----
-
-## 👥 Equipo de Desarrollo
-
-Repositorio desarrollado como parte del proyecto académico de Ingeniería de Software.
+* Readability
+* Scalability
+* Maintainability
+* Best practices
 
 ---
 
-## 📌 Notas
+## 👥 Development Team
 
-Este repositorio hace parte de una arquitectura modular basada en la separación de responsabilidades entre frontend y backend.
+Repository developed as part of the Software Engineering academic project.
+
+---
+
+## 📌 Notes
+
+This repository is part of a modular architecture based on the separation of responsibilities between frontend and backend.
+
+---
+
