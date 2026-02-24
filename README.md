@@ -1,4 +1,4 @@
-# 🎨 Frontend - [Nombre del Proyecto]
+# 🎨 Frontend - NachoPechas
 
 > ⚠️ **Estado del proyecto:** En fase de planeación - Por definir.
 
