@@ -1,0 +1,99 @@
+<div class="dashboard-layout">
+  
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>UniLibrary</h2>
+      <span>Academic Portal</span>
+    </div>
+    
+    <nav class="nav-menu">
+      <a href="#" class="nav-item">🏢 Study Rooms</a>
+      <a href="#" class="nav-item">📅 My Bookings</a>
+      <a href="#" class="nav-item active">🗺️ Library Map</a>
+      <a href="#" class="nav-item">📚 Resources</a>
+    </nav>
+    
+    <button class="btn-book-room">Book a Room</button>
+  </aside>
+
+  <main class="main-container">
+    <header class="topbar">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Search for rooms, books, or resources...">
+      </div>
+      <div class="user-actions">
+        <button class="icon-btn">🔔</button>
+        <button class="icon-btn">❓</button>
+        <div class="avatar">👤</div>
+      </div>
+    </header>
+
+    <section class="content-body">
+      <div class="map-header">
+        <div>
+          <h1>Floor 2: North Wing</h1>
+          <p>Real-time availability of individual study booths</p>
+        </div>
+        <div class="status-legend">
+          <span class="legend-item"><i class="dot available"></i> Available</span>
+          <span class="legend-item"><i class="dot occupied"></i> Occupied</span>
+          <span class="legend-item"><i class="dot reserved"></i> Reserved</span>
+        </div>
+      </div>
+
+      <div class="map-card">
+        <div class="grid-desks">
+          @for (desk of desks(); track desk.id) {
+            <button 
+              [class]="'desk-btn ' + desk.status + (selectedDesk() === desk.id ? ' selected' : '')"
+              (click)="selectDesk(desk.id)">
+              <span class="desk-icon">🪑</span>
+              <span class="desk-label">{{ desk.id }}</span>
+            </button>
+          }
+        </div>
+        <div class="main-entrance">MAIN ENTRANCE</div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="details-panel">
+    <div class="panel-section">
+      <span class="section-tag">SPOT DETAILS</span>
+      <h2 class="spot-title">Desk {{ selectedDesk() }}</h2>
+      <span class="badge available">AVAILABLE</span>
+      <p class="spot-sub">Second Floor, North Wing</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="panel-section">
+      <h3>Availability Today</h3>
+      <div class="time-slot">
+        <span>Morning Session</span>
+        <span class="time">10:00 - 14:00</span>
+      </div>
+      <div class="time-slot">
+        <span>Evening Session</span>
+        <span class="time">16:00 - 20:00</span>
+      </div>
+    </div>
+
+    <div class="panel-section amenities-card">
+      <h3>Amenities</h3>
+      <div class="chips-container">
+        <span class="chip">⚡ Power</span>
+        <span class="chip">📶 Hi-Speed</span>
+        <span class="chip">💺 Ergonomic</span>
+      </div>
+    </div>
+
+    <div class="panel-actions">
+      <button class="btn-primary-action">Book Now</button>
+      <button class="btn-secondary-action">Add to Watchlist</button>
+      <p class="disclaimer">REQUIRES VALID STUDENT ID FOR ENTRY</p>
+    </div>
+  </aside>
+
+</div>
