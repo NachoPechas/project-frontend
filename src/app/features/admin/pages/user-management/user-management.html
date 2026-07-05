@@ -1,0 +1,192 @@
+<div class="admin-layout">
+  
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>UniLibrary Admin</h2>
+      <p>Panel de Gestión</p>
+    </div>
+    
+    <nav class="nav-menu">
+        <a routerLink="/dashboard" class="nav-item">🏢 Dashboard</a>
+        <a routerLink="/catalog" class="nav-item">📖 Catalog</a>
+        <a routerLink="/history" class="nav-item">⏱️ Mi Historial</a>
+
+        @if (authService.isAdmin()) {
+            <div class="admin-divider">Sección Admin</div>
+            <a routerLink="/user-management" class="nav-item admin-link">👥 User Management</a>
+            <a routerLink="/analytics" class="nav-item admin-link">📈 Dashboard & Analítica</a>
+            <a routerLink="/resources" class="nav-item admin-link">📚Resources</a>
+        }
+    </nav>      
+
+    
+    <div class="sidebar-footer">
+      <a href="#" class="footer-item">↪️ Salir del Panel</a>
+    </div>
+  </aside>
+  
+  <main class="main-container">
+    
+    @if (!selectedUserId()) {
+      <header class="top-bar">
+        <div class="header-left">
+          <h1>Gestión Global de Usuarios</h1>
+          <p>Supervisión de cuentas estudiantiles, estados de bloqueo y solicitudes</p>
+        </div>
+      </header>
+
+      <section class="content-body">
+        <div class="filters-panel">
+          <div class="filter-group search">
+            <label>BUSCAR ESTUDIANTE</label>
+            <input 
+              type="text" 
+              placeholder="Nombre o ID del usuario..."
+              [ngModel]="searchQuery()"
+              (ngModelChange)="searchQuery.set($event)"
+            >
+          </div>
+
+          <div class="filter-group">
+            <label>FILTRAR POR CONDICIÓN</label>
+            <select [ngModel]="statusFilter()" (ngModelChange)="statusFilter.set($event)">
+              <option value="Todos los estados">Todos los estudiantes</option>
+              <option value="Solo Bloqueados">⚠️ Solo Bloqueados</option>
+              <option value="Con Reservación Activa">🪑 Con Reservación Activa</option>
+            </select>
+          </div>
+
+          <div class="results-meta">
+            <span class="results-count"><strong>{{ filteredUsers().length }}</strong> usuarios filtrados</span>
+          </div>
+        </div>
+
+        <div class="users-grid">
+          @for (user of filteredUsers(); track user.id) {
+            <div class="user-card">
+              <div class="user-header">
+                <img [src]="user.avatarUrl" [alt]="user.name" class="user-avatar">
+                <div class="user-identity">
+                  <h3>{{ user.name }}</h3>
+                  <span class="user-id-tag">{{ user.id }}</span>
+                </div>
+                <span [class]="'account-badge ' + user.status.toLowerCase()">
+                  {{ user.status.toUpperCase() }}
+                </span>
+              </div>
+
+              <div class="user-body">
+                <p class="user-email">✉️ {{ user.email }}</p>
+                @if (user.hasActiveBooking) {
+                  <div class="booking-banner">
+                    <span class="booking-icon">📅</span>
+                    <div class="booking-text">
+                      <strong>Reserva Activa</strong>
+                      <p>{{ user.activeBookingDetails }}</p>
+                    </div>
+                  </div>
+                } @else {
+                  <p class="no-bookings-text">Sin reservas ni préstamos en curso</p>
+                }
+              </div>
+
+              <div class="user-actions">
+                <button class="btn-inspect-history" (click)="inspectUserHistory(user.id)">
+                  🔎 Ver Historial Completo
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+    
+
+
+    @else {
+      <header class="inspection-bar">
+        <button class="btn-back-arrow" (click)="closeInspection()">◀ Volver al listado maestro</button>
+        <div class="inspection-user-info">
+          @if (selectedUser(); as user) {
+            <img [src]="user.avatarUrl" class="mini-avatar" [alt]="user.name">
+            <div>
+              <h2>Historial Clínico de Biblioteca: {{ user.name }}</h2>
+              <p>ID de Registro: {{ user.id }} | Estado de Cuenta: <strong>{{ user.status }}</strong></p>
+            </div>
+          }
+        </div>
+      </header>
+
+      <section class="embedded-history-view">
+        <app-history></app-history>
+      </section>
+    }
+    <div class="automation-dashboard">
+    
+    <div class="automation-card">
+            <h3>⚙️ Monitor de Inasistencias</h3>
+            <p class="section-desc">Monitoreo automático con tiempo de tolerancia (15 min).</p>
+            
+            <div class="auto-list">
+            @for (desk of automationService.absenteeismDesks(); track desk.id) {
+                <div class="auto-row warning">
+                <div class="row-info">
+                    <strong>Desk {{ desk.id }} - En Espera</strong>
+                    <p>Usuario: {{ desk.user }} | Reserva: {{ desk.reservedTime }} (Pasaron {{ desk.minutesPassed }} min)</p>
+                </div>
+                @if (desk.minutesPassed > 15) {
+                    <button class="btn-auto-action release" (click)="automationService.releaseDesk(desk.id)">
+                    Liberar Puesto
+                    </button>
+                } @else {
+                    <span class="badge time-wait">En Tolerancia</span>
+                }
+                </div>
+            }
+            </div>
+        </div>
+
+        <div class="automation-card">
+            <h3>⏳ Colas de Listas de Espera </h3>
+            <p class="section-desc">Control de tiempo límite para confirmación de asignación.</p>
+
+            <div class="auto-list">
+            @for (list of automationService.waitingLists(); track list.resourceId) {
+                <div class="waiting-resource-block">
+                <h4>{{ list.resourceName }}</h4>
+                @for (user of list.usersInLine; track user.userId) {
+                    <div class="auto-row compact">
+                    <span>👤 {{ user.userName }} ({{user.joinedAt}})</span>
+                    @if (user.status === 'Asignado (Confirmación Pendiente)') {
+                        <div class="action-group">
+                        <span class="badge deadline">⏱️ Límite en curso</span>
+                        <button class="btn-mini-success" (click)="automationService.confirmOrSkipWaitingList(list.resourceId, user.userId, true)">✓</button>
+                        <button class="btn-mini-danger" (click)="automationService.confirmOrSkipWaitingList(list.resourceId, user.userId, false)">✕ Expirar</button>
+                        </div>
+                    } @else {
+                        <span class="badge waiting">En Cola</span>
+                    }
+                    </div>
+                }
+                </div>
+            }
+            </div>
+        </div>
+
+        <div class="automation-card full-width">
+            <h3>🔔 Registro de Alertas Enviadas Automáticamente</h3>
+            <div class="notifications-log-grid">
+            @for (notif of automationService.notifications(); track notif.id) {
+                <div [class]="'log-item ' + (notif.type.includes('Multa') ? 'danger' : 'info')">
+                <span class="log-tag">{{ notif.type }}</span>
+                <strong>Estudiante: {{ notif.userName }}</strong>
+                <p>{{ notif.message }}</p>
+                <span class="log-time">{{ notif.date }}</span>
+                </div>
+            }
+            </div>
+        </div>
+
+    </div>
+  </main>
+</div>

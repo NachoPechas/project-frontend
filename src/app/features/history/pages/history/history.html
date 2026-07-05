@@ -1,0 +1,119 @@
+<div class="history-layout">
+  
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>Library Systems</h2>
+      <p>Academic Portal</p>
+    </div>
+    
+    <nav class="nav-menu">
+        <a routerLink="/dashboard" class="nav-item">🏢 Dashboard</a>
+        <a routerLink="/catalog" class="nav-item">📖 Catalog</a>
+        <a routerLink="/history" class="nav-item">⏱️ Mi Historial</a>
+
+        @if (authService.isAdmin()) {
+            <div class="admin-divider">Sección Admin</div>
+            <a routerLink="/admin/users" class="nav-item admin-link">👥 Control de Usuarios</a>
+            <a routerLink="/admin/analytics" class="nav-item admin-link">📈 Dashboard & Analítica</a>
+            <a routerLink="/resources" class="nav-item admin-link">📚Resources</a>
+        }
+    </nav>
+    
+    <button class="btn-new-action">Nueva Solicitud</button>
+    
+    <div class="sidebar-footer">
+      <a href="#" class="footer-item">❓ Help Center</a>
+      <a href="#" class="footer-item">↪️ Log Out</a>
+    </div>
+  </aside>
+
+  <main class="main-container">
+    
+    <header class="top-bar">
+      <div class="header-left">
+        <h1>Historial de Uso</h1>
+        <p>Seguimiento global de tus interacciones con la biblioteca</p>
+      </div>
+      <div class="header-right-actions">
+        <button class="icon-btn">🔔</button>
+        <div class="user-badge">👤</div>
+      </div>
+    </header>
+
+    <section class="content-body">
+      <div class="filters-panel">
+        <div class="filter-group">
+          <label>TIPO DE RECURSO</label>
+          <select [ngModel]="selectedType()" (ngModelChange)="selectedType.set($event)">
+            @for (type of resourceTypes(); track type) {
+              <option [value]="type">{{ type }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>FECHA INICIO</label>
+          <input 
+            type="date" 
+            [ngModel]="startDate()" 
+            (ngModelChange)="startDate.set($event)"
+          >
+        </div>
+
+        <div class="filter-group">
+          <label>FECHA FIN</label>
+          <input 
+            type="date" 
+            [ngModel]="endDate()" 
+            (ngModelChange)="endDate.set($event)"
+          >
+        </div>
+
+        <div class="results-meta">
+          <span class="results-count"><strong>{{ filteredHistory().length }}</strong> registros encontrados</span>
+        </div>
+      </div>
+
+      <div class="history-list">
+        @for (item of filteredHistory(); track item.id) {
+          <div [class]="'history-card ' + item.type.toLowerCase().replace(' ', '-')">
+            <div class="card-icon-wrapper">
+              @if (item.type === 'Préstamo Libro') { 📚 }
+              @else if (item.type === 'Reserva Puesto') { 🪑 }
+              @else { ⚠️ }
+            </div>
+
+            <div class="card-main-info">
+              <div class="card-top-row">
+                <span class="resource-type-tag">{{ item.type }}</span>
+                <span class="record-date">📅 {{ item.date }}</span>
+              </div>
+              <h3 class="resource-title">{{ item.resourceName }}</h3>
+              <p class="resource-details">{{ item.details }}</p>
+            </div>
+
+            <div class="card-status-wrapper">
+              <span [class]="'status-badge ' + item.status.toLowerCase()">
+                {{ item.status.toUpperCase() }}
+              </span>
+              <span class="record-id">{{ item.id }}</span>
+            </div>
+          </div>
+        } @empty {
+          <div class="empty-state">
+            <span class="empty-icon">🔍</span>
+            <h3>No se encontraron registros</h3>
+            <p>Prueba cambiando los parámetros de los filtros o el rango de fechas.</p>
+          </div>
+        }
+      </div>
+
+      <footer class="pagination-container">
+        <button class="arrow-btn">◀</button>
+        <button class="page-num active">1</button>
+        <button class="arrow-btn">▶</button>
+      </footer>
+
+    </section>
+  </main>
+</div>

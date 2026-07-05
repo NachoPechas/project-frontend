@@ -1,0 +1,139 @@
+<div class="resources-layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>Library Systems</h2>
+      <p>Academic Portal</p>
+    </div>
+    
+    <nav class="nav-menu">
+        <a routerLink="/dashboard" class="nav-item">🏢 Dashboard</a>
+        <a routerLink="/catalog" class="nav-item">📖 Catalog</a>
+        <a routerLink="/history" class="nav-item">⏱️ Mi Historial</a>
+
+        @if (authService.isAdmin()) {
+            <div class="admin-divider">Sección Admin</div>
+            <a routerLink="/admin/user-management" class="nav-item admin-link">👥 User Management</a>
+            <a routerLink="/admin/analytics" class="nav-item admin-link">📈 Dashboard & Analítica</a>
+            <a routerLink="/resources" class="nav-item admin-link">📚Resources</a>
+        }
+    </nav>
+    
+    
+    
+    <div class="sidebar-footer">
+      <a href="#" class="footer-item">❓ Help Center</a>
+      <a href="#" class="footer-item">↪️ Log Out</a>
+    </div>
+  </aside>
+  
+  <main class="main-container">
+    <header class="topbar">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          placeholder="Search by Copy ID (e.g., BK-001)..."
+          [ngModel]="searchId()"
+          (ngModelChange)="searchId.set($event)"
+        >
+      </div>
+      <div class="user-actions">
+        <button class="icon-btn">🔔</button>
+        <div class="avatar">👤</div>
+      </div>
+    </header>
+
+    <section class="content-body">
+      <div class="page-header">
+        <div>
+          <h1>Resource Management</h1>
+          <p>Consult availability, update conditions, and manage book copies.</p>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <table class="resources-table">
+          <thead>
+            <tr>
+              <th>Copy ID</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Condition</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (book of filteredBooks(); track book.id) {
+              <tr 
+                [class.selected]="selectedBookId() === book.id" 
+                (click)="selectBook(book.id)">
+                <td class="bold-id">{{ book.id }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>
+                  <span [class]="'badge-condition ' + book.physicalCondition.toLowerCase()">
+                    {{ book.physicalCondition }}
+                  </span>
+                </td>
+                <td>
+                  <span [class]="'badge-status ' + book.status.toLowerCase().replace(' ', '-')">
+                    {{ book.status }}
+                  </span>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5" class="empty-state">No copies found with that ID.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <aside class="details-panel">
+    @if (currentBook(); as book) {
+      <div class="panel-section">
+        <span class="section-tag"> INSPECTION</span>
+        <h2 class="spot-title">{{ book.title }}</h2>
+        <p class="spot-sub">Copy ID: <strong>{{ book.id }}</strong></p>
+      </div>
+
+      <hr class="divider">
+
+      <div class="panel-section">
+        <h3>Register Physical Condition</h3>
+        <p class="section-desc">Assess the book condition upon return or review.</p>
+        
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" name="condition" value="Excellent" 
+                   [ngModel]="newCondition()" (ngModelChange)="newCondition.set($event)">
+            <span>✨ Excellent</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="condition" value="Good" 
+                   [ngModel]="newCondition()" (ngModelChange)="newCondition.set($event)">
+            <span>👍 Good</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="condition" value="Damaged" 
+                   [ngModel]="newCondition()" (ngModelChange)="newCondition.set($event)">
+            <span>⚠️ Damaged (Auto-Lock)</span>
+          </label>
+        </div>
+      </div>
+
+      @if (newCondition() === 'Damaged') {
+        <div class="system-alert-box">
+          <p><strong>⚙️ System Rule (RF_09):</strong> Setting state to "Damaged" will automatically lock this copy into <strong>In Maintenance</strong> status.</p>
+        </div>
+      }
+
+      <div class="panel-actions">
+        <button class="btn-primary-action" (click)="updateCondition()">Save Inspection</button>
+      </div>
+    }
+  </aside>
+</div>
