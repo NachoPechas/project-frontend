@@ -3,7 +3,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { History } from '../../../history/pages/history/history';
 import { AutomationService } from '../../../../core/services/automation.service';
-import { AuthService } from '../../../../core/services/auth.service';
+import { AuthService } from '../../../../core/services/auth/auth.service';
 interface UserSession {
   id: string;
   name: string;

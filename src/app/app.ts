@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AuthService } from './core/services/auth.service'; // Asegúrate de que la ruta sea la correcta
+import { AuthService } from './core/services/auth/auth.service'; // Asegúrate de que la ruta sea la correcta
 
 @Component({
   selector: 'app-root',

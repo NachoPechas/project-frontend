@@ -1,7 +1,7 @@
 import { Component, signal, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../../../core/services/auth.service'; 
+import { AuthService } from '../../../../core/services/auth/auth.service'; 
 
 interface Book {
   id: number;
