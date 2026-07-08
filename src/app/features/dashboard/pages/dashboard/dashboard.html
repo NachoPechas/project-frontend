@@ -104,10 +104,13 @@
       <div class="panel-card-container">
         <h3>Availability Today</h3>
         @for (slot of desk.slots; track slot.id) {
-          <div class="time-row">
+          <button
+            type="button"
+            [class]="'time-row time-option ' + (selectedSlotId() === slot.id ? 'selected' : '')"
+            (click)="selectSlot(slot.id)">
             <span>{{ slot.session }}</span>
             <strong>{{ slot.hours }}</strong>
-          </div>
+          </button>
         } @empty {
           <p class="spot-sub">No sessions available for today.</p>
         }

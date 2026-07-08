@@ -88,6 +88,12 @@
           <p>{{ errorMessage() }}</p>
         </div>
       } @else {
+        @if (actionMessage()) {
+          <div class="catalog-message">
+            {{ actionMessage() }}
+          </div>
+        }
+
         <div class="books-grid">
           @for (book of filteredBooks(); track book.id) {
             <div class="book-card">
@@ -106,7 +112,7 @@
 
               <div class="card-actions">
                 @if (book.status === 'available') {
-                  <button class="btn-action-primary reserve" type="button">Reservar</button>
+                  <button class="btn-action-primary reserve" type="button" (click)="reserveBook(book)">Reservar</button>
                 } @else {
                   <button class="btn-action-primary notify" type="button">Notificar</button>
                 }

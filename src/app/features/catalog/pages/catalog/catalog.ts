@@ -20,6 +20,7 @@ export class Catalog implements OnInit {
   books = signal<CatalogBook[]>([]);
   isLoading = signal(false);
   errorMessage = signal('');
+  actionMessage = signal('');
 
   categories = computed(() => {
     const categories = new Set(this.books().map((book) => book.category).filter(Boolean));
@@ -47,6 +48,7 @@ export class Catalog implements OnInit {
   loadBooks(): void {
     this.isLoading.set(true);
     this.errorMessage.set('');
+    this.actionMessage.set('');
 
     this.catalogApi.getBooks().subscribe({
       next: (books) => {
@@ -57,6 +59,25 @@ export class Catalog implements OnInit {
         this.errorMessage.set(error.message);
         this.books.set([]);
         this.isLoading.set(false);
+      },
+    });
+  }
+
+  reserveBook(book: CatalogBook): void {
+    if (!book.availableItemId) {
+      this.actionMessage.set('Este libro no tiene ejemplares disponibles.');
+      return;
+    }
+
+    this.actionMessage.set('');
+
+    this.catalogApi.reserveBook(book).subscribe({
+      next: () => {
+        this.actionMessage.set(`Reserva creada para "${book.title}".`);
+        this.loadBooks();
+      },
+      error: (error: Error) => {
+        this.actionMessage.set(error.message);
       },
     });
   }

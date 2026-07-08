@@ -213,6 +213,17 @@
 }
 .time-row span { color: var(--text-dark); font-weight: 500; }
 .time-row strong { color: #1E3A8A; }
+.time-option {
+  width: 100%;
+  background: #FFFFFF;
+  cursor: pointer;
+  text-align: left;
+}
+.time-option.selected {
+  border-color: #1E3A8A;
+  background: #E6EFFE;
+  box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.08);
+}
 
 /* Contenedor Celeste Amenities */
 .amenities-container {
