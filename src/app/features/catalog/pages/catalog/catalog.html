@@ -1,0 +1,132 @@
+<div class="catalog-layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>Library Systems</h2>
+      <p>Academic Portal</p>
+    </div>
+
+    <nav class="nav-menu">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">Dashboard</a>
+      <a routerLink="/catalog" routerLinkActive="active" class="nav-item">Catalog</a>
+      <a routerLink="/history" routerLinkActive="active" class="nav-item">Mi Historial</a>
+
+      @if (authService.isStaff()) {
+        <div class="admin-divider">Seccion Admin</div>
+        @if (authService.isAdmin()) {
+          <a routerLink="/user-management" routerLinkActive="active" class="nav-item admin-link">User Management</a>
+        }
+        <a routerLink="/analytics" routerLinkActive="active" class="nav-item admin-link">Dashboard & Analitica</a>
+        <a routerLink="/resources" routerLinkActive="active" class="nav-item admin-link">Resources</a>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="#" class="footer-item">Help Center</a>
+      <a href="#" class="footer-item" (click)="$event.preventDefault(); authService.logout()">Log Out</a>
+    </div>
+  </aside>
+
+  <main class="main-container">
+    <header class="top-bar">
+      <div class="header-left">
+        <h1>Catalogo de Libros</h1>
+      </div>
+      <div class="search-wrapper">
+        <span class="search-icon">Search</span>
+        <input
+          type="text"
+          placeholder="Advanced Search..."
+          [ngModel]="searchQuery()"
+          (ngModelChange)="searchQuery.set($event)"
+        >
+        <span class="advanced-text">Advanced Search</span>
+      </div>
+      <div class="header-right-actions">
+        <span class="nav-text-link">Collections</span>
+        <button class="icon-btn" type="button">Bell</button>
+        <button class="icon-btn" type="button">Time</button>
+        <div class="user-badge">U</div>
+        <button class="btn-checkout" type="button">Check Out</button>
+      </div>
+    </header>
+
+    <section class="content-body">
+      <div class="filters-panel">
+        <div class="filter-group">
+          <label>TITULO</label>
+          <select><option>Todos los titulos</option></select>
+        </div>
+        <div class="filter-group">
+          <label>AUTOR</label>
+          <select><option>Cualquier autor</option></select>
+        </div>
+        <div class="filter-group">
+          <label>CATEGORIA</label>
+          <select [ngModel]="selectedCategory()" (ngModelChange)="selectedCategory.set($event)">
+            @for (cat of categories(); track cat) {
+              <option [value]="cat">{{ cat }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="results-meta">
+          <span class="results-count"><strong>{{ filteredBooks().length }}</strong> resultados encontrados</span>
+          <div class="view-modes">
+            <button class="mode-btn active" type="button">Grid</button>
+            <button class="mode-btn" type="button">List</button>
+          </div>
+        </div>
+      </div>
+
+      @if (isLoading()) {
+        <div class="empty-state">
+          <h3>Cargando catalogo...</h3>
+        </div>
+      } @else if (errorMessage()) {
+        <div class="empty-state">
+          <h3>No se pudo cargar el catalogo</h3>
+          <p>{{ errorMessage() }}</p>
+        </div>
+      } @else {
+        <div class="books-grid">
+          @for (book of filteredBooks(); track book.id) {
+            <div class="book-card">
+              <div class="cover-wrapper">
+                <img [src]="book.coverUrl" [alt]="book.title" class="book-cover">
+                <span [class]="'status-badge ' + book.status">
+                  {{ book.status === 'available' ? 'AVAILABLE' : 'OCCUPIED' }}
+                </span>
+              </div>
+
+              <div class="book-info">
+                <span class="book-genre">{{ book.category }}</span>
+                <h3 class="book-title" [title]="book.title">{{ book.title }}</h3>
+                <p class="book-author">{{ book.author }}</p>
+              </div>
+
+              <div class="card-actions">
+                @if (book.status === 'available') {
+                  <button class="btn-action-primary reserve" type="button">Reservar</button>
+                } @else {
+                  <button class="btn-action-primary notify" type="button">Notificar</button>
+                }
+                <button class="btn-info-circle" type="button">i</button>
+              </div>
+            </div>
+          } @empty {
+            <div class="empty-state">
+              <h3>No se encontraron libros</h3>
+              <p>Prueba con otro termino de busqueda o categoria.</p>
+            </div>
+          }
+        </div>
+      }
+
+      <footer class="pagination-container">
+        <button class="arrow-btn" type="button">Prev</button>
+        <button class="page-num active" type="button">1</button>
+        <button class="arrow-btn" type="button">Next</button>
+      </footer>
+    </section>
+  </main>
+</div>

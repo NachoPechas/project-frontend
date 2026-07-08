@@ -1,0 +1,148 @@
+<div class="admin-layout">
+  
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>UniLibrary Admin</h2>
+      <p>Panel de Gestión</p>
+    </div>
+    
+    <nav class="nav-menu">
+        <a routerLink="/dashboard" class="nav-item">🏢 Dashboard</a>
+        <a routerLink="/catalog" class="nav-item">📖 Catalog</a>
+        <a routerLink="/history" class="nav-item">⏱️ Mi Historial</a>
+
+        @if (authService.isAdmin()) {
+            <div class="admin-divider">Sección Admin</div>
+            <a routerLink="/user-management" class="nav-item admin-link">👥 User Management</a>
+            <a routerLink="/analytics" class="nav-item admin-link">📈 Dashboard & Analítica</a>
+            <a routerLink="/resources" class="nav-item admin-link">📚Resources</a>
+        }
+    </nav>      
+
+    
+    <div class="sidebar-footer">
+      <a href="#" class="footer-item">↪️ Salir del Panel</a>
+    </div>
+  </aside>
+
+  <main class="main-container">
+    <header class="top-bar">
+      <div class="header-left">
+        <h1>Centro de Monitoreo y Auditoría</h1>
+        <p>Analice el rendimiento global y gestione las políticas de uso responsable</p>
+      </div>
+    </header>
+
+    <div class="content-body">
+      
+      <section class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span>📚 Préstamos Activos</span>
+            <span class="kpi-icon text-blue">📖</span>
+          </div>
+          <div class="kpi-value">{{ activeLoansCount() }}</div>
+          <p class="kpi-sub">Libros actualmente fuera de sala</p>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span>🪑 Ocupación de Puestos</span>
+            <span class="kpi-icon text-green">📊</span>
+          </div>
+          <div class="kpi-value">{{ occupiedDesksPercentage() }}%</div>
+          <div class="progress-bar"><div class="progress-fill" [style.width.%]="occupiedDesksPercentage()"></div></div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span>⚠️ Recaudación por Multas</span>
+            <span class="kpi-icon text-red">💵</span>
+          </div>
+          <div class="kpi-value">${{ pendingFinesTotal() }} COP</div>
+          <p class="kpi-sub">Por retrasos acumulados</p>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span>👥 Usuarios en Sala</span>
+            <span class="kpi-icon">👤</span>
+          </div>
+          <div class="kpi-value">{{ activeUsersCount() }}</div>
+          <p class="kpi-sub">Estudiantes conectados hoy</p>
+        </div>
+      </section>
+
+      <div class="dashboard-split">
+        
+        <section class="reports-section">
+          <div class="section-title-bar">
+            <h2>📋 Reportes e Informes Detallados (RF_10)</h2>
+            <select [ngModel]="selectedReportType()" (ngModelChange)="selectedReportType.set($event)" class="mini-select">
+              <option value="Todos">Todos los reportes</option>
+              <option value="Préstamos">Préstamos</option>
+              <option value="Retraso">Retrasos</option>
+              <option value="Inventario">Inventario</option>
+            </select>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Tipo</th>
+                  <th>Nombre del Reporte</th>
+                  <th>Fecha</th>
+                  <th>Registros</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (report of filteredReports(); track report.id) {
+                  <tr>
+                    <td><span class="txt-code">{{ report.id }}</span></td>
+                    <td><span [class]="'type-tag ' + report.type.toLowerCase()">{{ report.type }}</span></td>
+                    <td><strong>{{ report.title }}</strong></td>
+                    <td>{{ report.generatedDate }}</td>
+                    <td>{{ report.recordsCount }} filas</td>
+                    <td><button class="btn-table-download">📥 Descargar CSV</button></td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="audit-section">
+          <h2>⚖️ Auditoría de Cumplimiento (RF_17)</h2>
+          <p class="section-desc">Usuarios que incumplieron sus reservas reiteradamente (Límite: 3 fallas).</p>
+
+          <div class="audit-list">
+            @for (user of flaggedUsers(); track user.userId) {
+              <div [class]="'audit-row ' + user.actionRequired.toLowerCase().replace(' ', '-')">
+                <div class="audit-user-details">
+                  <strong>{{ user.name }}</strong>
+                  <span class="txt-code">{{ user.userId }}</span>
+                  <p class="txt-danger">⚠️ {{ user.missedBookingsCount }} inasistencias detectadas</p>
+                </div>
+                
+                <div class="audit-action-zone">
+                  @if (user.actionRequired === 'Suspender') {
+                    <button class="btn-audit-suspend" (click)="triggerSuspension(user.userId)">
+                      Suspender Cuenta
+                    </button>
+                  } @else {
+                    <span class="badge-suspended">🚫 SUSPENDIDO</span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </section>
+
+      </div>
+
+    </div>
+  </main>
+</div>

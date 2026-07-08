@@ -1,0 +1,138 @@
+:host {
+  --color-primary: #1E3A8A; /* Azul marino oscuro */
+  --color-primary-hover: #1D4ED8;
+  --color-secondary: #64748B; /* Gris pizarra */
+  --color-neutral: #76767D; /* Gris de control */
+  --bg-light: #F1F5F9; /* Fondo gris claro idéntico al dashboard */
+  --border-color: #E2E8F0;
+}
+
+/* Contenedor principal idéntico al entorno del dashboard */
+.login-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-light);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Tarjeta de login limpia y minimalista */
+.login-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  padding: 3rem 2.5rem;
+  border-radius: 16px; /* Esquinas redondeadas de tu UI */
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04); /* Sombra sutil y elegante */
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+/* Icono con contenedor cuadrado de puntas redondeadas */
+.logo-box {
+  width: 56px;
+  height: 56px;
+  background-color: #EEF2F6;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem auto;
+  font-size: 1.5rem;
+}
+
+.login-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0F172A; /* Texto oscuro */
+}
+
+.login-header p {
+  color: var(--color-secondary);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+/* Inputs y Etiquetas (Labels) */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.input-group label {
+  font-size: 0.8rem;
+  color: #0F172A;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Barra de búsqueda / Input minimalista */
+.input-group input {
+  background: #F8FAFC;
+  border: 1px solid var(--border-color);
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  color: #0F172A;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.input-group input::placeholder {
+  color: #94A3B8;
+}
+
+.input-group input:focus {
+  outline: none;
+  background: #FFFFFF;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15); /* Enfoque con tu azul */
+}
+
+/* Banner de error */
+.error-banner {
+  background: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  color: #991B1B;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Botón Sólido Primario Redondeado */
+.btn-submit {
+  width: 100%;
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border: none;
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-submit:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-submit:active {
+  transform: scale(0.99);
+}

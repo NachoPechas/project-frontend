@@ -1,0 +1,154 @@
+:host {
+  --sidebar-bg: #0B132B;
+  --bg-main: #F4F6F9;
+  --text-dark: #1E293B;
+  --text-muted: #64748B;
+  --primary-blue: #0B2545;
+  --accent-blue: #1E3A8A;
+}
+
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #FFFFFF;
+  overflow: hidden;
+}
+
+/* --- SIDEBAR EXTENDIDO --- */
+.sidebar {
+  background-color: var(--sidebar-bg);
+  color: white;
+  padding: 2rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+.brand h2 { margin: 0; font-size: 1.3rem; font-weight: 700; color: #FFFFFF; }
+.brand p { margin: 0.15rem 0 0 0; color: #475569; font-size: 0.8rem; }
+
+.nav-menu { display: flex; flex-direction: column; gap: 0.25rem; margin-top: 2.5rem; }
+.nav-item {
+  color: #94A3B8;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.nav-item.active, .nav-item:hover { background-color: #1E293B; color: white; }
+
+.btn-new-search {
+  background-color: #0B2545;
+  color: white;
+  border: none;
+  padding: 0.85rem;
+  border-radius: 6px;
+  font-weight: 600;
+  margin-top: auto;
+  cursor: pointer;
+}
+
+.sidebar-footer { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #1E293B; }
+.footer-item { color: #94A3B8; text-decoration: none; font-size: 0.85rem; display: flex; gap: 0.5rem; }
+
+/* --- CONTENEDOR CENTRAL Y TOPBAR --- */
+.main-container { display: flex; flex-direction: column; overflow-y: auto; background: #F8FAFC; }
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: white;
+  border-bottom: 1px solid #E2E8F0;
+  gap: 1.5rem;
+}
+.top-bar h1 { font-size: 1.25rem; margin: 0; color: var(--text-dark); font-weight: 700; width: 180px; }
+
+.search-wrapper {
+  background: #F1F5F9;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  max-width: 500px;
+}
+.search-wrapper input { background: transparent; border: none; outline: none; width: 100%; margin-left: 0.5rem; font-size: 0.85rem; }
+.advanced-text { font-size: 0.8rem; color: #1E3A8A; font-weight: 600; white-space: nowrap; cursor: pointer; border-bottom: 1px solid #1E3A8A; margin-left: 0.5rem; }
+
+.header-right-actions { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
+.nav-text-link { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; cursor: pointer; }
+.icon-btn { background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--text-muted); }
+.user-badge { width: 28px; height: 28px; background: #E2E8F0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; }
+
+.btn-checkout { background: var(--primary-blue); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; }
+
+/* --- SECCIÓN DE FILTROS --- */
+.content-body { padding: 1.5rem 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
+.filters-panel {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+  background: white;
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+}
+.filter-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.filter-group label { font-size: 0.65rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.5px; }
+.filter-group select { padding: 0.5rem 1rem; border: 1px solid #E2E8F0; border-radius: 6px; background: #FFFFFF; font-size: 0.85rem; color: var(--text-dark); min-width: 150px; outline: none; }
+
+.results-meta { margin-left: auto; display: flex; align-items: center; gap: 1rem; }
+.results-count { font-size: 0.85rem; color: var(--text-muted); }
+.view-modes { display: flex; gap: 0.25rem; background: #F1F5F9; padding: 0.25rem; border-radius: 6px; }
+.mode-btn { background: none; border: none; padding: 0.25rem 0.5rem; cursor: pointer; border-radius: 4px; color: var(--text-muted); }
+.mode-btn.active { background: white; color: var(--text-dark); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+
+/* --- REJILLA Y TARJETAS DEL CATÁLOGO --- */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.book-card {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.book-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.04); }
+
+.cover-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 115%; /* Relación de aspecto vertical de portada */
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #F1F5F9;
+}
+.book-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+
+.status-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+.status-badge.available { background: #D1FAE5; color: #065F46; }
+.status-badge.occupied { background: #FEE2E2; color: #991B1B; }
+
+.book-info { padding: 0.75rem 0.25rem; flex-grow: 1; display: flex; flex-direction: column; gap: 0.25rem; }
+.book-genre { font-size: 0.75rem; color: #94A3B8; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; }
