@@ -1,43 +1,42 @@
 <div class="history-layout">
-  
   <aside class="sidebar">
     <div class="brand">
       <h2>Library Systems</h2>
       <p>Academic Portal</p>
     </div>
-    
+
     <nav class="nav-menu">
-        <a routerLink="/dashboard" class="nav-item">🏢 Dashboard</a>
-        <a routerLink="/catalog" class="nav-item">📖 Catalog</a>
-        <a routerLink="/history" class="nav-item">⏱️ Mi Historial</a>
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">Dashboard</a>
+      <a routerLink="/catalog" routerLinkActive="active" class="nav-item">Catalog</a>
+      <a routerLink="/history" routerLinkActive="active" class="nav-item">Mi Historial</a>
 
+      @if (authService.isStaff()) {
+        <div class="admin-divider">Seccion Admin</div>
         @if (authService.isAdmin()) {
-            <div class="admin-divider">Sección Admin</div>
-            <a routerLink="/user-management" class="nav-item admin-link">👥 User Management</a>
-            <a routerLink="/analytics" class="nav-item admin-link">📈 Dashboard & Analítica</a>
-            <a routerLink="/resources" class="nav-item admin-link">📚Resources</a>
+          <a routerLink="/user-management" routerLinkActive="active" class="nav-item admin-link">User Management</a>
         }
-    </nav>      
+        <a routerLink="/analytics" routerLinkActive="active" class="nav-item admin-link">Dashboard & Analitica</a>
+        <a routerLink="/resources" routerLinkActive="active" class="nav-item admin-link">Resources</a>
+      }
+    </nav>
 
-    
-    <button class="btn-new-action">Nueva Solicitud</button>
-    
+    <button class="btn-new-action" type="button">Nueva Solicitud</button>
+
     <div class="sidebar-footer">
-      <a href="#" class="footer-item">❓ Help Center</a>
-      <a href="#" class="footer-item">↪️ Log Out</a>
+      <a href="#" class="footer-item">Help Center</a>
+      <a href="#" class="footer-item" (click)="$event.preventDefault(); authService.logout()">Log Out</a>
     </div>
   </aside>
 
   <main class="main-container">
-    
     <header class="top-bar">
       <div class="header-left">
         <h1>Historial de Uso</h1>
-        <p>Seguimiento global de tus interacciones con la biblioteca</p>
+        <p>Seguimiento de interacciones con la biblioteca</p>
       </div>
       <div class="header-right-actions">
-        <button class="icon-btn">🔔</button>
-        <div class="user-badge">👤</div>
+        <button class="icon-btn" type="button">Bell</button>
+        <div class="user-badge">U</div>
       </div>
     </header>
 
@@ -54,18 +53,18 @@
 
         <div class="filter-group">
           <label>FECHA INICIO</label>
-          <input 
-            type="date" 
-            [ngModel]="startDate()" 
+          <input
+            type="date"
+            [ngModel]="startDate()"
             (ngModelChange)="startDate.set($event)"
           >
         </div>
 
         <div class="filter-group">
           <label>FECHA FIN</label>
-          <input 
-            type="date" 
-            [ngModel]="endDate()" 
+          <input
+            type="date"
+            [ngModel]="endDate()"
             (ngModelChange)="endDate.set($event)"
           >
         </div>
@@ -76,45 +75,54 @@
       </div>
 
       <div class="history-list">
-        @for (item of filteredHistory(); track item.id) {
-          <div [class]="'history-card ' + item.type.toLowerCase().replace(' ', '-')">
-            <div class="card-icon-wrapper">
-              @if (item.type === 'Préstamo Libro') { 📚 }
-              @else if (item.type === 'Reserva Puesto') { 🪑 }
-              @else { ⚠️ }
-            </div>
-
-            <div class="card-main-info">
-              <div class="card-top-row">
-                <span class="resource-type-tag">{{ item.type }}</span>
-                <span class="record-date">📅 {{ item.date }}</span>
-              </div>
-              <h3 class="resource-title">{{ item.resourceName }}</h3>
-              <p class="resource-details">{{ item.details }}</p>
-            </div>
-
-            <div class="card-status-wrapper">
-              <span [class]="'status-badge ' + item.status.toLowerCase()">
-                {{ item.status.toUpperCase() }}
-              </span>
-              <span class="record-id">{{ item.id }}</span>
-            </div>
-          </div>
-        } @empty {
+        @if (isLoading()) {
           <div class="empty-state">
-            <span class="empty-icon">🔍</span>
-            <h3>No se encontraron registros</h3>
-            <p>Prueba cambiando los parámetros de los filtros o el rango de fechas.</p>
+            <h3>Cargando historial...</h3>
           </div>
+        } @else if (errorMessage()) {
+          <div class="empty-state">
+            <h3>No se pudo cargar el historial</h3>
+            <p>{{ errorMessage() }}</p>
+          </div>
+        } @else {
+          @for (item of filteredHistory(); track item.id) {
+            <div [class]="'history-card ' + item.typeClass">
+              <div class="card-icon-wrapper">
+                @if (item.typeClass === 'loan') { Libro }
+                @else if (item.typeClass === 'reservation') { Puesto }
+                @else { Alerta }
+              </div>
+
+              <div class="card-main-info">
+                <div class="card-top-row">
+                  <span class="resource-type-tag">{{ item.type }}</span>
+                  <span class="record-date">{{ item.date }}</span>
+                </div>
+                <h3 class="resource-title">{{ item.resourceName }}</h3>
+                <p class="resource-details">{{ item.details }}</p>
+              </div>
+
+              <div class="card-status-wrapper">
+                <span [class]="'status-badge ' + item.status.toLowerCase()">
+                  {{ item.status.toUpperCase() }}
+                </span>
+                <span class="record-id">{{ item.id }}</span>
+              </div>
+            </div>
+          } @empty {
+            <div class="empty-state">
+              <h3>No se encontraron registros</h3>
+              <p>Prueba cambiando los filtros o el rango de fechas.</p>
+            </div>
+          }
         }
       </div>
 
       <footer class="pagination-container">
-        <button class="arrow-btn">◀</button>
-        <button class="page-num active">1</button>
-        <button class="arrow-btn">▶</button>
+        <button class="arrow-btn" type="button">Prev</button>
+        <button class="page-num active" type="button">1</button>
+        <button class="arrow-btn" type="button">Next</button>
       </footer>
-
     </section>
   </main>
 </div>

@@ -25,22 +25,22 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: Dashboard,
-    canActivate: [roleGuard(['admin', 'student'])],
+    canActivate: [roleGuard(['admin', 'librarian', 'student'])],
   },
   {
     path: 'resources',
     component: Resources,
-    canActivate: [roleGuard(['admin', 'student'])],
+    canActivate: [roleGuard(['admin', 'librarian'])],
   },
   {
     path: 'catalog',
     component: Catalog,
-    canActivate: [roleGuard(['admin', 'student'])],
+    canActivate: [roleGuard(['admin', 'librarian', 'student'])],
   },
   {
     path: 'history',
     component: History,
-    canActivate: [roleGuard(['admin', 'student'])],
+    canActivate: [roleGuard(['admin', 'librarian', 'student'])],
 
   },
   {
@@ -51,6 +51,6 @@ export const routes: Routes = [
   {
     path: 'analytics',
     component: Analytics,
-    canActivate: [roleGuard(['admin'])],
+    canActivate: [roleGuard(['admin', 'librarian'])],
   }
 ];

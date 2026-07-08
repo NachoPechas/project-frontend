@@ -1,29 +1,30 @@
 <div class="dashboard-layout">
-  
   <aside class="sidebar">
     <div class="brand">
       <h2>UniLibrary</h2>
       <p>Academic Portal</p>
     </div>
-    
+
     <nav class="nav-menu">
-        <a routerLink="/dashboard" class="nav-item">🏢 Dashboard</a>
-        <a routerLink="/catalog" class="nav-item">📖 Catalog</a>
-        <a routerLink="/history" class="nav-item">⏱️ Mi Historial</a>
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">Dashboard</a>
+      <a routerLink="/catalog" routerLinkActive="active" class="nav-item">Catalog</a>
+      <a routerLink="/history" routerLinkActive="active" class="nav-item">Mi Historial</a>
 
+      @if (authService.isStaff()) {
+        <div class="admin-divider">Seccion Admin</div>
         @if (authService.isAdmin()) {
-            <div class="admin-divider">Sección Admin</div>
-            <a routerLink="/user-management" class="nav-item admin-link">👥 User Management</a>
-            <a routerLink="/analytics" class="nav-item admin-link">📈 Dashboard & Analítica</a>
-            <a routerLink="/resources" class="nav-item admin-link">📚Resources</a>
+          <a routerLink="/user-management" routerLinkActive="active" class="nav-item admin-link">User Management</a>
         }
-    </nav>      
+        <a routerLink="/analytics" routerLinkActive="active" class="nav-item admin-link">Dashboard & Analitica</a>
+        <a routerLink="/resources" routerLinkActive="active" class="nav-item admin-link">Resources</a>
+      }
+    </nav>
 
-    <button class="btn-sidebar-book">Book a Room</button>
+    <button class="btn-sidebar-book" type="button" (click)="bookSelectedDesk()">Book a Room</button>
 
     <div class="sidebar-footer">
-       <a href="#" class="footer-item">❓ Help Center</a>
-       <a href="#" class="footer-item">↪️ Log Out</a>
+      <a href="#" class="footer-item">Help Center</a>
+      <a href="#" class="footer-item" (click)="$event.preventDefault(); authService.logout()">Log Out</a>
     </div>
   </aside>
 
@@ -31,14 +32,14 @@
     <header class="topbar">
       <span class="topbar-title">Library Dashboard</span>
       <div class="search-box">
-        <span class="search-icon">🔍</span>
+        <span class="search-icon">Search</span>
         <input type="text" placeholder="Search for rooms, books, or resources...">
       </div>
       <div class="user-actions">
-        <button class="icon-btn">🔔</button>
-        <button class="icon-btn">❓</button>
+        <button class="icon-btn" type="button">Bell</button>
+        <button class="icon-btn" type="button">?</button>
         <div class="avatar">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=60" alt="Avatar">
+          <span>{{ authService.currentUser()?.nombre?.charAt(0) || 'U' }}</span>
         </div>
       </div>
     </header>
@@ -46,8 +47,8 @@
     <section class="content-body">
       <div class="map-header">
         <div class="map-title">
-          <h1>Floor 2: North Wing</h1>
-          <p>Real-time availability of individual study booths</p>
+          <h1>Puestos de estudio</h1>
+          <p>Disponibilidad de cubiculos conectada con el backend</p>
         </div>
         <div class="status-legend">
           <span class="legend-item"><i class="dot available"></i> Available</span>
@@ -56,28 +57,36 @@
         </div>
       </div>
 
-      <div class="map-card">
-        <div class="map-relative-wrapper">
-          
-          <div class="map-line line-left"></div>
-          <div class="map-line line-right"></div>
+      @if (isLoading()) {
+        <div class="map-card">
+          <p class="spot-sub">Cargando puestos...</p>
+        </div>
+      } @else if (errorMessage()) {
+        <div class="map-card">
+          <p class="spot-sub">{{ errorMessage() }}</p>
+        </div>
+      } @else {
+        <div class="map-card">
+          <div class="map-relative-wrapper">
+            <div class="map-line line-left"></div>
+            <div class="map-line line-right"></div>
 
-          <div class="grid-desks">
-            @for (desk of desks(); track desk.id) {
-              <button 
-                [class]="'desk-btn ' + desk.status + (selectedDeskId() === desk.id ? ' selected' : '')"
-                (click)="selectDesk(desk.id)">
-                <span class="d-icon">🪑</span>
-                <span class="d-label">{{ desk.id }}</span>
-              </button>
-
-              @if (desk.id === 'C02') {
-                <div class="main-entrance">MAIN ENTRANCE</div>
+            <div class="grid-desks">
+              @for (desk of desks(); track desk.id) {
+                <button
+                  type="button"
+                  [class]="'desk-btn ' + desk.status + (selectedDeskId() === desk.id ? ' selected' : '')"
+                  (click)="selectDesk(desk.id)">
+                  <span class="d-icon">Seat</span>
+                  <span class="d-label">{{ desk.id }}</span>
+                </button>
+              } @empty {
+                <div class="main-entrance">Sin puestos registrados</div>
               }
-            }
-          </div>
             </div>
-      </div>
+          </div>
+        </div>
+      }
     </section>
   </main>
 
@@ -94,7 +103,7 @@
 
       <div class="panel-card-container">
         <h3>Availability Today</h3>
-        @for (slot of desk.slots; track slot.session) {
+        @for (slot of desk.slots; track slot.id) {
           <div class="time-row">
             <span>{{ slot.session }}</span>
             <strong>{{ slot.hours }}</strong>
@@ -110,17 +119,22 @@
           @for (amenity of desk.amenities; track amenity) {
             <span class="chip">{{ amenity }}</span>
           } @empty {
-            <span class="spot-sub" style="color: #1E3A8A;">Standard Booth</span>
+            <span class="spot-sub">Standard Booth</span>
           }
         </div>
       </div>
 
+      @if (actionMessage()) {
+        <p class="spot-sub">{{ actionMessage() }}</p>
+      }
+
       <div class="panel-actions">
-        <button class="btn-book-now">Book Now</button>
-        <button class="btn-watchlist">Add to Watchlist</button>
+        <button class="btn-book-now" type="button" (click)="bookSelectedDesk()">Book Now</button>
+        <button class="btn-watchlist" type="button">Add to Watchlist</button>
         <p class="disclaimer-text">REQUIRES VALID STUDENT ID FOR ENTRY</p>
       </div>
+    } @else {
+      <p class="spot-sub">Selecciona un puesto para ver el detalle.</p>
     }
   </aside>
-
 </div>
