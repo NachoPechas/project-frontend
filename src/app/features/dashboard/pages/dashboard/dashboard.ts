@@ -15,6 +15,7 @@ export class Dashboard implements OnInit {
   private readonly studySeatsApi = inject(StudySeatsApiService);
 
   selectedDeskId = signal<string | null>(null);
+  selectedSlotId = signal<number | null>(null);
   desks = signal<Desk[]>([]);
   isLoading = signal(false);
   errorMessage = signal('');
@@ -36,7 +37,9 @@ export class Dashboard implements OnInit {
     this.studySeatsApi.getSeats().subscribe({
       next: (desks) => {
         this.desks.set(desks);
-        this.selectedDeskId.set(desks[0]?.id ?? null);
+        const firstDesk = desks[0] ?? null;
+        this.selectedDeskId.set(firstDesk?.id ?? null);
+        this.selectedSlotId.set(firstDesk?.slots[0]?.id ?? null);
         this.isLoading.set(false);
       },
       error: (error: Error) => {
@@ -49,22 +52,30 @@ export class Dashboard implements OnInit {
   }
 
   selectDesk(id: string): void {
+    const desk = this.desks().find((item) => item.id === id) ?? null;
     this.selectedDeskId.set(id);
+    this.selectedSlotId.set(desk?.slots[0]?.id ?? null);
+    this.actionMessage.set('');
+  }
+
+  selectSlot(id: number): void {
+    this.selectedSlotId.set(id);
     this.actionMessage.set('');
   }
 
   bookSelectedDesk(): void {
     const desk = this.selectedDesk();
-    const firstSlot = desk?.slots[0];
+    const selectedSlotId = this.selectedSlotId();
+    const selectedSlot = desk?.slots.find((slot) => slot.id === selectedSlotId);
 
-    if (!desk || !firstSlot) {
+    if (!desk || !selectedSlot) {
       this.actionMessage.set('Este puesto no tiene franjas disponibles para reservar.');
       return;
     }
 
     this.studySeatsApi.reserveSeat({
       seatId: desk.seatId,
-      slotId: firstSlot.id,
+      slotId: selectedSlot.id,
       reservationDate: this.studySeatsApi.today(),
       durationMinutes: 120,
     }).subscribe({

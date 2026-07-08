@@ -12,6 +12,7 @@ export interface CatalogBook {
   category: string;
   status: 'available' | 'occupied';
   coverUrl: string;
+  availableItemId?: number;
 }
 
 interface BackendBook {
@@ -60,6 +61,19 @@ export class CatalogApiService {
     );
   }
 
+  reserveBook(book: CatalogBook): Observable<unknown> {
+    if (!book.availableItemId) {
+      throw new Error('No hay ejemplares disponibles para este libro.');
+    }
+
+    return this.http.post<ApiResponse<unknown>>('/api/prestamos/prestar', {
+      itemId: book.availableItemId,
+    }).pipe(
+      map(extractData),
+      catchError(handleApiError('No se pudo reservar el libro'))
+    );
+  }
+
   private getItemsByBook(bookId: number): Observable<BackendItem[]> {
     return this.http.get<ApiResponse<BackendItem[]>>(`/api/ejemplares/libro/${bookId}`).pipe(
       map(extractData)
@@ -67,15 +81,16 @@ export class CatalogApiService {
   }
 
   private toCatalogBook(book: BackendBook, items: BackendItem[]): CatalogBook {
-    const hasAvailableCopy = items.some((item) => this.normalize(item.status).includes('disponible'));
+    const availableCopy = items.find((item) => this.normalize(item.status).includes('disponible'));
 
     return {
       id: book.id,
       title: book.title,
       author: book.author,
       category: book.category || 'Sin categoria',
-      status: hasAvailableCopy ? 'available' : 'occupied',
+      status: availableCopy ? 'available' : 'occupied',
       coverUrl: this.covers[Math.abs(book.id) % this.covers.length],
+      availableItemId: availableCopy?.id,
     };
   }
 
