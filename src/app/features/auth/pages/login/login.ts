@@ -11,6 +11,9 @@ import { AuthService } from '../../../../core/services/auth/auth.service';
   styleUrl: './login.css',
 })
 export class Login {
+onRegister() {
+throw new Error('Method not implemented.');
+}
   // Inyectamos el servicio de autenticación y el Router de forma moderna
   private authService = inject(AuthService);
   private router = inject(Router);

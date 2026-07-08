@@ -1,0 +1,87 @@
+<div class="register-screen">
+  <div class="register-card">
+    <div class="register-header">
+      <div class="logo-box">
+        <span>📚</span>
+      </div>
+      <h2>UniLibrary</h2>
+      <p>Create your Academic Account</p>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="error-banner">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    @if (successMessage()) {
+      <div class="success-banner">
+        {{ successMessage() }}
+      </div>
+    }
+
+    <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+      <div class="input-group">
+        <label for="name">Full Name</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name"
+          [ngModel]="name()" 
+          (ngModelChange)="name.set($event)"
+          placeholder="Enter your full name..." 
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="email">Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email"
+          [ngModel]="email()" 
+          (ngModelChange)="email.set($event)"
+          placeholder="Enter your student email..." 
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password"
+          [ngModel]="password()" 
+          (ngModelChange)="password.set($event)"
+          placeholder="••••••••" 
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input 
+          type="password" 
+          id="confirmPassword" 
+          name="confirmPassword"
+          [ngModel]="confirmPassword()" 
+          (ngModelChange)="confirmPassword.set($event)"
+          placeholder="••••••••" 
+          required
+        />
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">
+          Sign Up
+        </button>
+      </div>
+
+      <div class="form-footer">
+        <p>Already have an account? <a (click)="router.navigate(['/login'])">Sign In</a></p>
+      </div>
+    </form>
+  </div>
+</div>

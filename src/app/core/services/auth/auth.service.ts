@@ -73,7 +73,9 @@ export class AuthService {
       void this.router.navigate(['/login']);
     }
   }
-
+  register(userData: any): Observable<any> {
+  return this.http.post('http://localhost:3000/api/auth/register', userData);
+  } 
   authToken(): string | null {
     return this.token();
   }
