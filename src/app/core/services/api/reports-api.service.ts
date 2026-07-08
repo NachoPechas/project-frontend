@@ -26,9 +26,13 @@ export interface DashboardReport {
   };
   users: {
     suspended: number;
+    active: number;
   };
   notifications: {
     pending: number;
+  };
+  penalties?: {
+    pendingAmount: number;
   };
 }
 

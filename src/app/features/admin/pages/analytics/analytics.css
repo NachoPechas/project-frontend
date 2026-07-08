@@ -60,8 +60,8 @@
 .txt-code { font-family: monospace; color: #64748B; background: #F1F5F9; padding: 0.15rem 0.3rem; border-radius: 4px; }
 
 .type-tag { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.4rem; border-radius: 4px; }
-.type-tag.préstamos { background: #E0F2FE; color: #0369A1; }
-.type-tag.retraso { background: #FEE2E2; color: #B91C1C; }
+.type-tag.prestamos { background: #E0F2FE; color: #0369A1; }
+.type-tag.retrasos { background: #FEE2E2; color: #B91C1C; }
 .type-tag.inventario { background: #FEF3C7; color: #B45309; }
 
 .btn-table-download { background: #F1F5F9; border: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 600; font-size: 0.75rem; color: var(--primary-blue); cursor: pointer; }

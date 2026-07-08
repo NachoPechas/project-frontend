@@ -34,6 +34,13 @@
     </header>
 
     <div class="content-body">
+      @if (isLoading()) {
+        <p class="section-desc">Cargando datos del backend...</p>
+      }
+
+      @if (errorMessage()) {
+        <p class="txt-danger">{{ errorMessage() }}</p>
+      }
       
       <section class="kpi-grid">
         <div class="kpi-card">
@@ -80,8 +87,8 @@
             <h2>📋 Reportes e Informes Detallados (RF_10)</h2>
             <select [ngModel]="selectedReportType()" (ngModelChange)="selectedReportType.set($event)" class="mini-select">
               <option value="Todos">Todos los reportes</option>
-              <option value="Préstamos">Préstamos</option>
-              <option value="Retraso">Retrasos</option>
+              <option value="Prestamos">Prestamos</option>
+              <option value="Retrasos">Retrasos</option>
               <option value="Inventario">Inventario</option>
             </select>
           </div>
@@ -117,6 +124,9 @@
         <section class="audit-section">
           <h2>⚖️ Auditoría de Cumplimiento (RF_17)</h2>
           <p class="section-desc">Usuarios que incumplieron sus reservas reiteradamente (Límite: 3 fallas).</p>
+          <button class="btn-audit-suspend" type="button" (click)="triggerSuspension('all')">
+            Ejecutar revisión de suspensiones
+          </button>
 
           <div class="audit-list">
             @for (user of flaggedUsers(); track user.userId) {
