@@ -12,8 +12,7 @@ import { AuthService } from '../../../../core/services/auth/auth.service';
 })
 export class Register {
   private authService = inject(AuthService);
-  export router = inject(Router); // Público para usarlo directo en el HTML si prefieres
-
+  router = inject(Router); 
   // Signals para capturar el formulario
   name = signal('');
   email = signal('');
