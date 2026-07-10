@@ -1,5 +1,5 @@
 :host {
-    --sidebar-bg: #0B132B; /* Azul ultra oscuro del bocheto */
+    --sidebar-bg: #0B132B; 
   --color-primary: #1E3A8A;
   --color-secondary: #64748B;
   --bg-light: #F8FAFC;
@@ -65,7 +65,7 @@
 .page-header h1 { margin: 0; font-size: 1.75rem; color: #0F172A; }
 .page-header p { margin: 0.25rem 0 1.5rem 0; color: var(--color-secondary); font-size: 0.9rem; }
 
-/* Estilos de la Tabla */
+
 .table-card {
   background: white;
   border-radius: 12px;
@@ -101,7 +101,7 @@
 
 .bold-id { font-weight: 700; color: var(--color-primary); }
 
-/* Badges Condición y Estado */
+
 .badge-condition {
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
@@ -122,7 +122,7 @@
 .badge-status.on-loan { background: rgba(59, 130, 246, 0.1); color: var(--color-loan); }
 .badge-status.in-maintenance { background: rgba(239, 68, 68, 0.1); color: var(--color-maintenance); }
 
-/* PANEL DERECHO */
+
 .details-panel {
   background: white;
   border-left: 1px solid var(--border-color);
@@ -138,7 +138,7 @@
 .divider { border: 0; border-top: 1px solid var(--border-color); margin: 0; }
 .section-desc { font-size: 0.85rem; color: var(--color-secondary); margin-top: 0; }
 
-/* Formulario */
+
 .radio-group { display: flex; flex-direction: column; gap: 0.75rem; }
 .radio-label {
   display: flex;

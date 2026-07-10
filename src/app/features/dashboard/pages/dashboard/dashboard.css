@@ -1,5 +1,5 @@
 :host {
-  --sidebar-bg: #0B132B; /* Azul ultra oscuro del bocheto */
+  --sidebar-bg: #0B132B; 
   --bg-main: #F4F6F9;
   --text-dark: #1E293B;
   --text-muted: #64748B;
@@ -19,7 +19,7 @@
   overflow: hidden;
 }
 
-/* --- SIDEBAR --- */
+
 .sidebar {
   background-color: var(--sidebar-bg);
   color: white;
@@ -59,7 +59,7 @@
   cursor: pointer;
 }
 
-/* --- MAIN CONTAINER --- */
+
 .main-container { display: flex; flex-direction: column; overflow-y: auto; background: #FFFFFF; }
 
 .topbar {
@@ -86,7 +86,7 @@
 .avatar { width: 32px; height: 32px; border-radius: 50%; overflow: hidden; }
 .avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-/* --- MAP WORKSPACE --- */
+
 .content-body { padding: 2rem; background-color: #F8FAFC; flex-grow: 1; }
 .map-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
 .map-title h1 { margin: 0; font-size: 1.5rem; color: var(--text-dark); }
@@ -108,7 +108,7 @@
 .dot.occupied { background-color: var(--color-red); }
 .dot.reserved { background-color: var(--color-yellow); }
 
-/* PLANO / CARD DEL MAPA */
+
 .map-card {
   background: white;
   border: 1px solid #E2E8F0;
@@ -120,7 +120,7 @@
 
 .map-relative-wrapper { position: relative; }
 
-/* Líneas de pasillo grises como la foto */
+
 .map-line {
   position: absolute;
   background-color: #CBD5E1;
@@ -154,14 +154,14 @@
 .desk-btn .d-icon { font-size: 1.25rem; }
 .desk-btn .d-label { font-size: 0.75rem; font-weight: 600; margin-top: 0.25rem; color: var(--text-muted); }
 
-/* Variaciones de estados de bordes de iconos */
+
 .desk-btn.available .d-icon { color: var(--color-green); }
 .desk-btn.occupied .d-icon { color: var(--color-red); }
 .desk-btn.reserved .d-icon { color: var(--color-yellow); }
 
 .desk-btn.selected { border: 2px solid #1E3A8A; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); }
 
-/* Entrada Principal */
+
 .main-entrance {
   grid-column: span 1;
   display: flex;
@@ -176,10 +176,10 @@
   text-align: center;
   width: 110px;
   height: 75px;
-  margin-left: -18px; /* Ajuste para centrar perfecto en el hueco */
+  margin-left: -18px; 
 }
 
-/* --- DETAILS PANEL --- */
+
 .details-panel {
   background: #FFFFFF;
   border-left: 1px solid #E2E8F0;
@@ -199,7 +199,7 @@
 .spot-sub { color: var(--text-muted); font-size: 0.8rem; font-weight: 500; }
 .divider { border: 0; border-top: 1px solid #E2E8F0; margin: 0; }
 
-/* Bloques de Horarios */
+
 .panel-card-container h3, .amenities-container h3 { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); margin: 0 0 0.75rem 0; }
 
 .time-row {
@@ -225,7 +225,7 @@
   box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.08);
 }
 
-/* Contenedor Celeste Amenities */
+
 .amenities-container {
   background-color: #E6EFFE;
   padding: 1.25rem;
@@ -244,11 +244,11 @@
   border: 1px solid rgba(30, 58, 138, 0.05);
 }
 
-/* Botones Inferiores */
+
 .panel-actions { margin-top: auto; display: flex; flex-direction: column; gap: 0.75rem; }
 
 .btn-book-now {
-  background-color: #0B2545; /* Azul marino de la foto */
+  background-color: #0B2545; 
   color: white;
   border: none;
   padding: 1rem;
