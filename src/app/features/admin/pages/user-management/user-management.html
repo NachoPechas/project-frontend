@@ -8,8 +8,9 @@
     <nav class="nav-menu">
       <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">Dashboard</a>
       <a routerLink="/catalog" routerLinkActive="active" class="nav-item">Catalog</a>
-      <a routerLink="/history" routerLinkActive="active" class="nav-item">Mi Historial</a>
-
+      @if (!authService.isStaff()) {
+        <a routerLink="/history" routerLinkActive="active" class="nav-item">Mi Historial</a>
+      }
       @if (authService.isStaff()) {
         <div class="admin-divider">Seccion Admin</div>
         @if (authService.isAdmin()) {
@@ -21,7 +22,7 @@
     </nav>
 
     <div class="sidebar-footer">
-      <a href="#" class="footer-item" (click)="$event.preventDefault(); authService.logout()">Salir del Panel</a>
+      <a href="#" class="footer-item" (click)="$event.preventDefault(); authService.logout()">Log Out</a>
     </div>
   </aside>
 

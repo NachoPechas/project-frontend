@@ -7,21 +7,22 @@
     </div>
     
     <nav class="nav-menu">
-        <a routerLink="/dashboard" class="nav-item">🏢 Dashboard</a>
-        <a routerLink="/catalog" class="nav-item">📖 Catalog</a>
-        <a routerLink="/history" class="nav-item">⏱️ Mi Historial</a>
-
+        <a routerLink="/dashboard" class="nav-item">Dashboard</a>
+        <a routerLink="/catalog" class="nav-item"> Catalog</a>
+      @if (!authService.isStaff()) {
+        <a routerLink="/history" routerLinkActive="active" class="nav-item">Mi Historial</a>
+      }
         @if (authService.isAdmin()) {
             <div class="admin-divider">Sección Admin</div>
-            <a routerLink="/user-management" class="nav-item admin-link">👥 User Management</a>
-            <a routerLink="/analytics" class="nav-item admin-link">📈 Dashboard & Analítica</a>
-            <a routerLink="/resources" class="nav-item admin-link">📚Resources</a>
+            <a routerLink="/user-management" class="nav-item admin-link"> User Management</a>
+            <a routerLink="/analytics" class="nav-item admin-link"> Dashboard & Analítica</a>
+            <a routerLink="/resources" class="nav-item admin-link">Resources</a>
         }
     </nav>      
 
     
     <div class="sidebar-footer">
-      <a href="#" class="footer-item">↪️ Salir del Panel</a>
+      <a href="#" class="footer-item" (click)="$event.preventDefault(); authService.logout()">Log Out</a>
     </div>
   </aside>
 
@@ -84,7 +85,7 @@
         
         <section class="reports-section">
           <div class="section-title-bar">
-            <h2>📋 Reportes e Informes Detallados (RF_10)</h2>
+            <h2>📋 Reportes e Informes Detallados </h2>
             <select [ngModel]="selectedReportType()" (ngModelChange)="selectedReportType.set($event)" class="mini-select">
               <option value="Todos">Todos los reportes</option>
               <option value="Prestamos">Prestamos</option>
@@ -102,7 +103,6 @@
                   <th>Nombre del Reporte</th>
                   <th>Fecha</th>
                   <th>Registros</th>
-                  <th>Acción</th>
                 </tr>
               </thead>
               <tbody>
@@ -113,8 +113,7 @@
                     <td><strong>{{ report.title }}</strong></td>
                     <td>{{ report.generatedDate }}</td>
                     <td>{{ report.recordsCount }} filas</td>
-                    <td><button class="btn-table-download">📥 Descargar CSV</button></td>
-                  </tr>
+                    </tr>
                 }
               </tbody>
             </table>
@@ -122,7 +121,7 @@
         </section>
 
         <section class="audit-section">
-          <h2>⚖️ Auditoría de Cumplimiento (RF_17)</h2>
+          <h2>⚖️ Auditoría de Cumplimiento </h2>
           <p class="section-desc">Usuarios que incumplieron sus reservas reiteradamente (Límite: 3 fallas).</p>
           <button class="btn-audit-suspend" type="button" (click)="triggerSuspension('all')">
             Ejecutar revisión de suspensiones

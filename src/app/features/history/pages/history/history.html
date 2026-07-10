@@ -8,8 +8,9 @@
     <nav class="nav-menu">
       <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">Dashboard</a>
       <a routerLink="/catalog" routerLinkActive="active" class="nav-item">Catalog</a>
-      <a routerLink="/history" routerLinkActive="active" class="nav-item">Mi Historial</a>
-
+      @if (!authService.isStaff()) {
+        <a routerLink="/history" routerLinkActive="active" class="nav-item">Mi Historial</a>
+      }
       @if (authService.isStaff()) {
         <div class="admin-divider">Seccion Admin</div>
         @if (authService.isAdmin()) {
@@ -35,7 +36,6 @@
         <p>Seguimiento de interacciones con la biblioteca</p>
       </div>
       <div class="header-right-actions">
-        <button class="icon-btn" type="button">Bell</button>
         <div class="user-badge">U</div>
       </div>
     </header>
