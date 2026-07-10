@@ -81,7 +81,7 @@ export class CatalogApiService {
   }
 
   private toCatalogBook(book: BackendBook, items: BackendItem[]): CatalogBook {
-    const availableCopy = items.find((item) => this.normalize(item.status).includes('disponible'));
+    const availableCopy = items.find((item) => this.isAvailableStatus(item.status));
 
     return {
       id: book.id,
@@ -99,5 +99,10 @@ export class CatalogApiService {
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');
+  }
+
+  private isAvailableStatus(status: unknown): boolean {
+    const normalizedStatus = this.normalize(status);
+    return normalizedStatus.includes('disponible') || normalizedStatus.includes('available');
   }
 }

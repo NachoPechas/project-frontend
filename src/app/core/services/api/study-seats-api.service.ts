@@ -74,27 +74,30 @@ export class StudySeatsApiService {
   }
 
   private toDesk(seat: BackendSeat): Desk {
+    const availableSlots = seat.availableSlots ?? [];
+    const reservedSlots = seat.reservedSlots ?? [];
+
     return {
       id: seat.code || `P-${String(seat.id).padStart(3, '0')}`,
       seatId: seat.id,
-      status: this.toStatus(seat.status),
+      status: this.toStatus(seat.status, availableSlots.length, reservedSlots.length),
       location: seat.location || 'Ubicacion no registrada',
       amenities: this.toAmenities(seat),
-      slots: (seat.availableSlots ?? []).map((slot) => this.toTimeSlot(slot)),
+      slots: availableSlots.map((slot) => this.toTimeSlot(slot)),
     };
   }
 
-  private toStatus(status: unknown): Desk['status'] {
+  private toStatus(status: unknown, availableCount = 0, reservedCount = 0): Desk['status'] {
     const normalizedStatus = String(status ?? '')
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');
 
-    if (normalizedStatus.includes('ocup')) {
+    if (normalizedStatus.includes('mantenimiento') || normalizedStatus.includes('fuera')) {
       return 'occupied';
     }
 
-    if (normalizedStatus.includes('reserv')) {
+    if (availableCount === 0 && reservedCount > 0) {
       return 'reserved';
     }
 
