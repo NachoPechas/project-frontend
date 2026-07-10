@@ -1,13 +1,13 @@
 :host {
-  --color-primary: #1E3A8A; /* Azul marino oscuro */
+  --color-primary: #1E3A8A; 
   --color-primary-hover: #1D4ED8;
-  --color-secondary: #64748B; /* Gris pizarra */
-  --color-neutral: #76767D; /* Gris de control */
-  --bg-light: #F1F5F9; /* Fondo gris claro idéntico al dashboard */
+  --color-secondary: #64748B; 
+  --color-neutral: #76767D; 
+  --bg-light: #F1F5F9; 
   --border-color: #E2E8F0;
 }
 
-/* Contenedor principal idéntico al entorno del dashboard */
+
 .login-screen {
   display: flex;
   justify-content: center;
@@ -21,15 +21,15 @@
   box-sizing: border-box;
 }
 
-/* Tarjeta de login limpia y minimalista */
+
 .login-card {
   background: #FFFFFF;
   border: 1px solid var(--border-color);
   padding: 3rem 2.5rem;
-  border-radius: 16px; /* Esquinas redondeadas de tu UI */
+  border-radius: 16px; 
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04); /* Sombra sutil y elegante */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04); 
 }
 
 .login-header {
@@ -37,7 +37,7 @@
   margin-bottom: 2.5rem;
 }
 
-/* Icono con contenedor cuadrado de puntas redondeadas */
+
 .logo-box {
   width: 56px;
   height: 56px;
@@ -54,7 +54,7 @@
   margin: 0;
   font-size: 1.6rem;
   font-weight: 700;
-  color: #0F172A; /* Texto oscuro */
+  color: #0F172A; 
 }
 
 .login-header p {
@@ -64,7 +64,7 @@
   font-weight: 500;
 }
 
-/* Inputs y Etiquetas (Labels) */
+
 .input-group {
   display: flex;
   flex-direction: column;
@@ -80,7 +80,7 @@
   letter-spacing: 0.5px;
 }
 
-/* Barra de búsqueda / Input minimalista */
+
 .input-group input {
   background: #F8FAFC;
   border: 1px solid var(--border-color);
@@ -115,10 +115,10 @@
   outline: none;
   background: #FFFFFF;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15); /* Enfoque con tu azul */
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15); 
 }
 
-/* Banner de error */
+
 .error-banner {
   background: #FEF2F2;
   border: 1px solid #FCA5A5;
@@ -131,7 +131,7 @@
   font-weight: 500;
 }
 
-/* Botón Sólido Primario Redondeado */
+
 .btn-submit {
   width: 100%;
   background: var(--color-primary);

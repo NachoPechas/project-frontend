@@ -17,7 +17,7 @@
   overflow: hidden;
 }
 
-/* --- SIDEBAR EXTENDIDO --- */
+
 .sidebar {
   background-color: var(--sidebar-bg);
   color: white;
@@ -56,7 +56,7 @@
 .sidebar-footer { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #1E293B; }
 .footer-item { color: #94A3B8; text-decoration: none; font-size: 0.85rem; display: flex; gap: 0.5rem; }
 
-/* --- CONTENEDOR CENTRAL Y TOPBAR --- */
+
 .main-container { display: flex; flex-direction: column; overflow-y: auto; background: #F8FAFC; }
 
 .top-bar {
@@ -88,7 +88,7 @@
 
 .btn-checkout { background: var(--primary-blue); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; }
 
-/* --- SECCIÓN DE FILTROS --- */
+
 .content-body { padding: 1.5rem 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
 
 .filters-panel {
@@ -110,7 +110,7 @@
 .mode-btn { background: none; border: none; padding: 0.25rem 0.5rem; cursor: pointer; border-radius: 4px; color: var(--text-muted); }
 .mode-btn.active { background: white; color: var(--text-dark); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
 
-/* --- REJILLA Y TARJETAS DEL CATÁLOGO --- */
+
 .books-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -131,7 +131,7 @@
 .cover-wrapper {
   position: relative;
   width: 100%;
-  padding-top: 115%; /* Relación de aspecto vertical de portada */
+  padding-top: 115%; 
   border-radius: 8px;
   overflow: hidden;
   background-color: #F1F5F9;
