@@ -45,6 +45,25 @@ export class UserManagement implements OnInit {
     });
   });
 
+  toggleStatus(user: UserSession): void {
+    const newStatusBackend = user.status === 'Activo' ? 'Suspendido' : 'Activo';
+    
+    this.adminApi.updateUserStatus(user.id, newStatusBackend).subscribe({
+      next: () => {
+        this.users.update(currentUsers => 
+          currentUsers.map(u => 
+            u.id === user.id 
+              ? { ...u, status: newStatusBackend === 'Suspendido' ? 'Bloqueado' : 'Activo' } 
+              : u
+          )
+        );
+      },
+      error: (err) => {
+        alert('No se pudo actualizar el usuario: ' + err.message);
+      }
+    });
+  }
+
   selectedUser = computed(() => {
     return this.users().find((user) => user.id === this.selectedUserId()) ?? null;
   });

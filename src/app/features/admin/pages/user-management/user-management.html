@@ -95,11 +95,24 @@
                   }
                 </div>
 
-                <div class="user-actions">
+                <div class="user-actions" style="display: flex; gap: 0.5rem; justify-content: space-between;">
                   <button class="btn-inspect-history" type="button" (click)="inspectUserHistory(user.id)">
-                    Ver Historial Completo
+                    Ver Historial
                   </button>
+                  
+                  <div class="action-group">
+                    @if (user.status === 'Activo') {
+                      <button class="btn-mini-danger" (click)="toggleStatus(user)" title="Bloquear Usuario">
+                        🚫
+                      </button>
+                    } @else {
+                      <button class="btn-mini-success" (click)="toggleStatus(user)" title="Activar Usuario">
+                        ✅
+                      </button>
+                    }
+                  </div>
                 </div>
+                
               </div>
             } @empty {
               <div class="empty-state">No se encontraron usuarios.</div>

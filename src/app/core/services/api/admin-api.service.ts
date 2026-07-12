@@ -40,6 +40,12 @@ export class AdminApiService {
     );
   }
 
+  updateUserStatus(id: number, status: 'Activo' | 'Suspendido'): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, { status }).pipe(
+      catchError(handleApiError('Error al cambiar el estado del usuario'))
+    );
+  }
+
   private toUserSession(user: BackendUser): UserSession {
     const name = user.nombre || user.name || 'Usuario sin nombre';
 
