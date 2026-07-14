@@ -23,12 +23,6 @@ La aplicación permite a la comunidad académica reservar puestos de estudio por
 *   **Despliegue y Entorno:** Docker
 
 ---
-Markdown
-# 🚀 Frontend Clean — Client Application
-
-Este directorio contiene el cliente de la aplicación web, construido sobre la arquitectura de **Angular**. El proyecto utiliza herramientas modernas de formateo, estilos globales con Angular Material y un entorno optimizado para desarrollo y producción.
-
----
 
 ## 📂 Estructura del Proyecto
 
@@ -60,7 +54,9 @@ frontend-clean/
 ├── tsconfig.app.json          # Configuración de compilación de TypeScript para la app
 ├── tsconfig.json              # Configuración base de TypeScript del proyecto
 └── tsconfig.spec.json         # Configuración del entorno de pruebas unitarias (Karma/Jasmine)
-🛠️ Requisitos del Entorno
+```
+---
+## 🛠️ Requisitos del Entorno
 Antes de comenzar, asegúrate de tener instalado el siguiente software en tu equipo:
 
 Node.js: v20.x o superior (LTS recomendada).
@@ -71,7 +67,8 @@ Angular CLI (Opcional, pero recomendado): Instalar globalmente con:
 
 Bash
 npm install -g @angular/cli
-⚙️ Guía de Inicio Rápido
+---
+##⚙️ Guía de Inicio Rápido
 Sigue estos pasos para clonar, configurar y ejecutar la aplicación de forma local:
 
 1. Descargar las dependencias
@@ -88,19 +85,6 @@ npm run start
 
 3. Evitar Conflictos con la API (Proxy)
 Para el desarrollo local, el proyecto está configurado para redirigir las peticiones al backend a través de proxy.conf.json. Si necesitas modificar la dirección base de tu servidor de APIs local, actualiza la propiedad target en dicho archivo.
-
-🧪 Pruebas y Calidad de Código
-Ejecutar pruebas unitarias (Specs):
-
-Bash
-npm run test
-Formatear el código automáticamente:
-
-Bash
-npx prettier --write "src/**/*.{ts,html,css,scss}"
-📦 Despliegue y Construcción (Producción)
-Para compilar la aplicación optimizando el rendimiento, minimizando recursos y aplicando Tree Shaking, ejecuta:
-
 Bash
 npm run build
 ## 🐳 Ejecución con Docker
@@ -109,3 +93,8 @@ Para facilitar el despliegue y evitar problemas de configuración local, el proy
 
 ```bash
 docker-compose up --build
+```
+
+---
+
+
