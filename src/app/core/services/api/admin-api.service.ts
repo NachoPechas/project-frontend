@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { handleApiError } from './api-error';
 import { ApiResponse, extractData } from './api-response';
+import { AuthService } from '../../services/auth/auth.service';
 
 export interface UserSession {
   id: number;
@@ -29,7 +30,9 @@ interface BackendUser {
   providedIn: 'root'
 })
 export class AdminApiService {
+  private readonly DEBUG = true;
   private readonly http = inject(HttpClient);
+  private readonly authService = inject(AuthService);
   private readonly apiUrl = '/api/usuarios';
 
   getUsers(): Observable<UserSession[]> {
@@ -41,8 +44,36 @@ export class AdminApiService {
   }
 
   updateUserStatus(id: number, status: 'Activo' | 'Suspendido'): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, { status }).pipe(
+    return this.http.put(`${this.apiUrl}/${id}`, { status }, { headers: this.authHeaders() }).pipe(
       catchError(handleApiError('Error al cambiar el estado del usuario'))
+    );
+  }
+
+  registerUser(payload: { nombre: string; email: string; password: string; confirmPassword: string; role: string; }): Observable<any> {
+    const url = `${this.apiUrl}/registro`;
+    const headers = this.authHeaders();
+
+    if (this.DEBUG) {
+      console.log('[AdminApiService] Enviando registro a:', url);
+      console.log('[AdminApiService] Headers:', headers.keys().reduce((acc, key) => ({ ...acc, [key]: headers.get(key) }), {}));
+    }
+
+    return this.http.post(url, payload, { headers }).pipe(
+      tap((response) => {
+        if (this.DEBUG) {
+          console.log('[AdminApiService] Respuesta HTTP del registro:', response);
+        }
+      }),
+      catchError((error) => {
+        if (this.DEBUG) {
+          console.error('[AdminApiService] Error HTTP del registro:', {
+            status: error?.status,
+            message: error?.message,
+            body: error?.error,
+          });
+        }
+        return handleApiError('No se pudo registrar el usuario')(error);
+      })
     );
   }
 
@@ -65,5 +96,12 @@ export class AdminApiService {
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');
+  }
+
+  private authHeaders(): HttpHeaders {
+    const token = this.authService.authToken();
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
   }
 }

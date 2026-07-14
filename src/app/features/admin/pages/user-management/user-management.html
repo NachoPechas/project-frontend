@@ -43,13 +43,13 @@
               type="text"
               placeholder="Nombre, correo o ID del usuario..."
               [ngModel]="searchQuery()"
-              (ngModelChange)="searchQuery.set($event)"
+              (ngModelChange)="searchQuery.set($event.target.value)"
             >
           </div>
 
           <div class="filter-group">
             <label>FILTRAR POR CONDICION</label>
-            <select [ngModel]="statusFilter()" (ngModelChange)="statusFilter.set($event)">
+            <select [ngModel]="statusFilter()" (ngModelChange)="statusFilter.set($event.target.value)">
               <option value="Todos los estados">Todos los estudiantes</option>
               <option value="Solo Bloqueados">Solo Bloqueados</option>
               <option value="Con Reservacion Activa">Con Reservacion Activa</option>
@@ -60,6 +60,65 @@
             <span class="results-count"><strong>{{ filteredUsers().length }}</strong> usuarios filtrados</span>
           </div>
         </div>
+
+        <section class="registration-card">
+          <h3>Registrar nuevo usuario</h3>
+          <p class="section-desc">Crea cuentas locales con correo institucional y rol asignado.</p>
+
+          <form [formGroup]="registrationForm" (ngSubmit)="registerUser()" class="registration-form">
+            <div class="form-row">
+              <label>Nombre</label>
+              <input type="text" formControlName="nombre" placeholder="Nombre completo">
+              @if (fieldErrors()['nombre']) {
+                <small class="error-text">{{ fieldErrors()['nombre'] }}</small>
+              }
+            </div>
+
+            <div class="form-row">
+              <label>Correo institucional</label>
+              <input type="email" formControlName="email" placeholder="usuario@unal.edu.co">
+              @if (fieldErrors()['email']) {
+                <small class="error-text">{{ fieldErrors()['email'] }}</small>
+              }
+            </div>
+
+            <div class="form-row">
+              <label>Contraseña</label>
+              <input type="password" formControlName="password" placeholder="Mínimo 8 caracteres, mayúscula y número">
+              @if (fieldErrors()['password']) {
+                <small class="error-text">{{ fieldErrors()['password'] }}</small>
+              }
+            </div>
+
+            <div class="form-row">
+              <label>Confirmar contraseña</label>
+              <input type="password" formControlName="confirmPassword" placeholder="Repite la contraseña">
+              @if (fieldErrors()['confirmPassword']) {
+                <small class="error-text">{{ fieldErrors()['confirmPassword'] }}</small>
+              }
+            </div>
+
+            <div class="form-row">
+              <label>Rol</label>
+              <select formControlName="role">
+                <option value="estudiante">Estudiante</option>
+                <option value="bibliotecario">Bibliotecario</option>
+                <option value="admin">Administrador</option>
+              </select>
+            </div>
+
+            @if (registerErrorMessage()) {
+              <div class="alert error">{{ registerErrorMessage() }}</div>
+            }
+            @if (registerSuccessMessage()) {
+              <div class="alert success">{{ registerSuccessMessage() }}</div>
+            }
+
+            <button type="submit" class="btn-submit" [disabled]="isRegistering()">
+              {{ isRegistering() ? 'Registrando...' : 'Registrar usuario' }}
+            </button>
+          </form>
+        </section>
 
         @if (isLoading()) {
           <div class="empty-state">Cargando usuarios...</div>
