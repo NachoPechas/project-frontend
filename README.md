@@ -68,7 +68,7 @@ Angular CLI (Opcional, pero recomendado): Instalar globalmente con:
 npm install -g @angular/cli
 
 ---
-##⚙️ Guía de Inicio Rápido
+## ⚙️ Guía de Inicio Rápido
 Sigue estos pasos para clonar, configurar y ejecutar la aplicación de forma local:
 
 1. Descargar las dependencias
