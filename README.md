@@ -1,143 +1,32 @@
-<<<<<<< HEAD
+# 📚 EncartaUnal - Frontend
+
+Este repositorio contiene la interfaz de usuario de **EncartaUnal**, el sistema de gestión virtual para la biblioteca del edificio **CYT (Ciencia y Tecnología)** de la Universidad Nacional de Colombia.
+
+La aplicación permite a la comunidad académica reservar puestos de estudio por franjas horarias en tiempo real, conocer las características de cada puesto y gestionar el préstamo de libros.
 
 ---
 
-# 🎨 Frontend - NachoPechas
+## ✨ Características Principales
 
-> ⚠️ **Project Status:** In planning phase - To be defined.
-
-This repository contains the implementation of the project’s **frontend** developed by the team.
-
-We are currently in the planning stage, defining:
-
-* Functional requirements
-* Technology stack
-* System architecture
-* Design guidelines
+*   **Puestos en tiempo real:** Mapa interactivo para ver qué puestos del CYT están libres u ocupados al instante.
+*   **Detalle de puestos:** Información sobre enchufes, tipo de mesa, ventilación, etc.
+*   **Reservas por franja horaria:** Bloqueo de espacios de estudio según tu horario.
+*   **Préstamo de libros:** Consulta de catálogo y reservas desde la plataforma.
 
 ---
 
-## 🚀 Project Structure
+## 🛠️ Stack Tecnológico
 
-The base frontend structure will be organized as follows:
+*   **Framework:** Angular
+*   **Diseño:** HTML5 y CSS3
+*   **Consumo de API:** Angular `HttpClient` (RxJS)
+*   **Despliegue y Entorno:** Docker
+
+---
+
+## 🐳 Ejecución con Docker
+
+Para facilitar el despliegue y evitar problemas de configuración local, el proyecto está contenedorizado. Solo necesitas tener instalado Docker y ejecutar:
 
 ```bash
-├── .gitignore
-├── README.md
-├── src
-│ └── ... (screens, components, views, etc.)
-└── public / assets / ... (depending on the technology)
-```
-
----
-
-## 🛠️ Technologies (To be defined)
-
-The technologies to be used will be defined during the system design phase.
-
-Possible tools to be evaluated:
-
-* Development framework
-* Styling libraries
-* State management
-* API consumption
-* Testing
-
----
-
-## ⚙️ Installation
-
-*Instructions coming soon.*
-
----
-
-## 🧪 Testing
-
-*Testing strategy to be defined.*
-
----
-
-## 📄 Code Conventions
-
-Development conventions will be established by the team to ensure:
-
-* Readability
-* Scalability
-* Maintainability
-* Best practices
-
----
-
-## 👥 Development Team
-
-Repository developed as part of the Software Engineering academic project.
-
----
-
-## 📌 Notes
-
-This repository is part of a modular architecture based on the separation of responsibilities between frontend and backend.
-
----
-
-=======
-# FrontendClean
-
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.10.
-
-## Development server
-
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
->>>>>>> front
+docker-compose up --build
