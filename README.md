@@ -65,8 +65,8 @@ Gestor de paquetes: npm (v10.x o superior).
 
 Angular CLI (Opcional, pero recomendado): Instalar globalmente con:
 
-Bash
 npm install -g @angular/cli
+
 ---
 ##⚙️ Guía de Inicio Rápido
 Sigue estos pasos para clonar, configurar y ejecutar la aplicación de forma local:
